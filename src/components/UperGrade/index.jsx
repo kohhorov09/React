@@ -161,26 +161,26 @@ export default function UperGrade({
   const boosters = [
     {
       name: "Boost X2",
-      cost: 1000 * (boostX2Count + 1),
+      cost: 2000 * (boostX2Count + 1),
       icon: "🚀",
       onClick: handleBoostX2,
-      disabled: coins < 1000 * (boostX2Count + 1) || boostActive,
+      disabled: coins < 2000 * (boostX2Count + 1) || boostActive,
       level: boostX2Count,
     },
     {
       name: "Multitap",
-      cost: 2000 * (multitapCount + 1),
+      cost: 5000 * (multitapCount + 1),
       icon: "🖐️",
       onClick: handleMultitap,
-      disabled: coins < 2000 * (multitapCount + 1),
+      disabled: coins < 5000 * (multitapCount + 1),
       level: multitapCount,
     },
     {
       name: "Energy Limit",
-      cost: 4000 * (energyLimitCount + 1),
+      cost: 6000 * (energyLimitCount + 1),
       icon: "🔋",
       onClick: handleEnergyLimit,
-      disabled: coins < 4000 * (energyLimitCount + 1),
+      disabled: coins < 6000 * (energyLimitCount + 1),
       level: energyLimitCount,
     },
     {

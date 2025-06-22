@@ -56,8 +56,11 @@ function App() {
   // 🔄 Missiyalarni yuklash
   useEffect(() => {
     axios
-      .get("https://your-vercel-domain.vercel.app/api/missions") // <--- bu yerni Vercelga moslab o'zgartiring
-      .then((res) => setMissions(res.data))
+      .get("https://db-js-2.onrender.com/missions")
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : res.data.missions;
+        setMissions(data || []);
+      })
       .catch((err) => console.error("❌ Missiyalarni yuklashda xatolik:", err));
   }, []);
 

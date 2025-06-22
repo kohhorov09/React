@@ -1,29 +1,37 @@
 import { useState, useEffect } from "react";
 
-export default function Missions({ coins, setCoins, missions }) {
+export default function Missions({ coins, setCoins, missions = [] }) {
   const [subscribed, setSubscribed] = useState({});
   const [allMissions, setAllMissions] = useState([]);
 
   const allowedTypes = ["instagram", "group", "channel"];
 
-  // Bajarilgan missionlar holatini localStorage dan yuklash
+  // Localdan bajarilgan missiyalarni olish
   useEffect(() => {
-    const savedSubs = localStorage.getItem("subscribedMissions");
-    if (savedSubs) {
-      setSubscribed(JSON.parse(savedSubs));
+    try {
+      const savedSubs = localStorage.getItem("subscribedMissions");
+      if (savedSubs) {
+        setSubscribed(JSON.parse(savedSubs));
+      }
+    } catch (err) {
+      console.error("❌ subscribedMissions JSON xato:", err);
     }
   }, []);
 
-  // Missiyalarni localStorage ga saqlab borish
+  // Missiyalarni localStorage yoki props'dan olish
   useEffect(() => {
-    if (missions && missions.length > 0) {
-      setAllMissions(missions);
-      localStorage.setItem("missionsData", JSON.stringify(missions));
-    } else {
-      const savedMissions = localStorage.getItem("missionsData");
-      if (savedMissions) {
-        setAllMissions(JSON.parse(savedMissions));
+    try {
+      if (missions && missions.length > 0) {
+        setAllMissions(missions);
+        localStorage.setItem("missionsData", JSON.stringify(missions));
+      } else {
+        const savedMissions = localStorage.getItem("missionsData");
+        if (savedMissions) {
+          setAllMissions(JSON.parse(savedMissions));
+        }
       }
+    } catch (err) {
+      console.error("❌ missionsData JSON xato:", err);
     }
   }, [missions]);
 
@@ -35,8 +43,11 @@ export default function Missions({ coins, setCoins, missions }) {
     const updated = { ...subscribed, [key]: true };
     setSubscribed(updated);
     localStorage.setItem("subscribedMissions", JSON.stringify(updated));
-    setCoins((prev) => prev + item.price); // ✅ Narxni qo‘shish
+    if (setCoins) {
+      setCoins((prev) => prev + (item.price || 0));
+    }
   };
+  console.log(localStorage.getItem("missionsData"));
 
   return (
     <div
@@ -63,13 +74,14 @@ export default function Missions({ coins, setCoins, missions }) {
           </p>
         )}
 
-        {allMissions.map((item) => {
-          const isAllowed = allowedTypes.includes(item.type);
-          const isDone = subscribed[item.id];
+        {allMissions.map((item, index) => {
+          const id = item?.id || index;
+          const isAllowed = allowedTypes.includes(item?.type);
+          const isDone = subscribed[id];
 
           return (
             <div
-              key={item.id}
+              key={id}
               style={{
                 background: "#1f2937",
                 padding: "1rem",
@@ -80,7 +92,7 @@ export default function Missions({ coins, setCoins, missions }) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                pointerEvents: isDone ? "none" : "auto", // disable qilish
+                pointerEvents: isDone ? "none" : "auto",
               }}
             >
               <div style={{ maxWidth: "60%" }}>
@@ -91,7 +103,7 @@ export default function Missions({ coins, setCoins, missions }) {
                     wordWrap: "break-word",
                   }}
                 >
-                  {item.title}
+                  {item?.title || "Untitled"}
                 </h3>
                 <p
                   style={{
@@ -102,8 +114,8 @@ export default function Missions({ coins, setCoins, missions }) {
                 >
                   {isAllowed
                     ? isDone
-                      ? "✅ Already"
-                      : `Subscribe to earn 🪙${item.price} coins`
+                      ? "✅ Already subscribed"
+                      : `Subscribe to earn 🪙${item?.price || 0} coins`
                     : "❌ Not allowed"}
                 </p>
               </div>
@@ -126,7 +138,7 @@ export default function Missions({ coins, setCoins, missions }) {
                   </div>
                 ) : (
                   <button
-                    onClick={() => handleSubscribe(item.id, item.url, item)}
+                    onClick={() => handleSubscribe(id, item.url, item)}
                     style={{
                       background: "#3b82f6",
                       color: "white",

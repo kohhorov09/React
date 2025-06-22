@@ -4,9 +4,14 @@ import Button from "@mui/material/Button";
 import Carusel from "../Carusel";
 import axios from "axios";
 
-const API_URL = "https://3-web.vercel.app/api/missions";
+const API_URL = "https://db-js-2.onrender.com/missions";
 
-export default function AccountPage({ missions, setMissions, coins }) {
+export default function AccountPage({
+  missions,
+  setMissions,
+  subscribed,
+  coins,
+}) {
   const [userEmail, setUserEmail] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [title, setTitle] = useState("");
@@ -33,9 +38,13 @@ export default function AccountPage({ missions, setMissions, coins }) {
 
     axios
       .get(API_URL)
-      .then((res) => setMissions(res.data))
-      .catch((err) => console.error("🚫 Mission load error:", err));
-  }, [setMissions]);
+      .then((res) => {
+        setMissions(res.data);
+      })
+      .catch((err) => {
+        console.error("🚫 Mission load error:", err);
+      });
+  }, []);
 
   const handleLogin = () => {
     const emailTrimmed = emailInput.trim().toLowerCase();
@@ -94,7 +103,8 @@ export default function AccountPage({ missions, setMissions, coins }) {
   };
 
   const handleDeleteMission = (id) => {
-    if (!window.confirm("Rostdan ham o‘chirishni xohlaysizmi?")) return;
+    const confirmed = window.confirm("Rostdan ham o‘chirishni xohlaysizmi?");
+    if (!confirmed) return;
 
     axios
       .delete(`${API_URL}/${id}`)
