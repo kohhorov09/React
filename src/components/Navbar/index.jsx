@@ -10,7 +10,7 @@ export default function BottomNavbar() {
     { name: "Earn", emoji: "🪙", path: "/" },
     { name: "UperGrade", emoji: "✅", path: "/uperGrade" },
     { name: "Missions", emoji: "😎", path: "/missions" },
-    { name: "Accaunt", emoji: "🤖", path: "/accaunt" },
+    { name: "Account", emoji: "🤖", path: "/account" },
   ];
 
   return (
