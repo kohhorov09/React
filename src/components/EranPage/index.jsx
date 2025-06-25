@@ -181,7 +181,7 @@ export default function EranPage({
               left: "50%",
               transform: "translate(-50%, -50%)",
               fontSize: "1.5rem",
-              color: "#00ff88",
+              color: "#e3e3e3",
               animation: "moveUpFade 1s ease-out forwards",
               zIndex: 3,
               pointerEvents: "none",
