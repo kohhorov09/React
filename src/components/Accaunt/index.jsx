@@ -9,8 +9,8 @@ const API_URL = "https://db-js-2.onrender.com/missions";
 export default function AccountPage({
   missions,
   setMissions,
-  subscribed,
   coins,
+  setCoins,
 }) {
   const [userEmail, setUserEmail] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -38,18 +38,13 @@ export default function AccountPage({
 
     axios
       .get(API_URL)
-      .then((res) => {
-        setMissions(res.data);
-      })
-      .catch((err) => {
-        console.error("🚫 Mission load error:", err);
-      });
+      .then((res) => setMissions(res.data))
+      .catch((err) => console.error("🚫 Mission load error:", err));
   }, []);
 
   const handleLogin = () => {
     const emailTrimmed = emailInput.trim().toLowerCase();
     const passwordTrimmed = passwordInput.trim();
-
     const isAdminLogin =
       (emailTrimmed === "adminshb" || emailTrimmed === "adminshb@gmail.com") &&
       passwordTrimmed === "20082009";
@@ -97,9 +92,7 @@ export default function AccountPage({
         setType("");
         setPrice("");
       })
-      .catch((err) => {
-        console.error("❌ Add mission error:", err);
-      });
+      .catch((err) => console.error("❌ Add mission error:", err));
   };
 
   const handleDeleteMission = (id) => {
@@ -112,9 +105,7 @@ export default function AccountPage({
         const updated = missions.filter((m) => m.id !== id);
         setMissions(updated);
       })
-      .catch((err) => {
-        console.error("❌ Delete error:", err);
-      });
+      .catch((err) => console.error("❌ Delete error:", err));
   };
 
   const inputStyle = {
@@ -129,11 +120,7 @@ export default function AccountPage({
   };
 
   const styles = {
-    container: {
-      maxWidth: "100%",
-      margin: "2rem auto",
-      color: "#FFF",
-    },
+    container: { maxWidth: "100%", margin: "2rem auto", color: "#FFF" },
     panel: {
       display: "flex",
       flexDirection: "column",
