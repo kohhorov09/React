@@ -92,10 +92,9 @@ function App() {
   return (
     <div
       style={{
-        background:
-          "linear-gradient(to bottom right, #0f0c29, #302b63, #24243e)",
         minHeight: "90vh",
       }}
+      className="BG"
     >
       <div style={{ padding: "2rem" }}>
         <Ball
@@ -166,7 +165,7 @@ function App() {
             }
           />
           <Route
-            path="/accaunt"
+            path="/account"
             element={
               <AccountPage
                 missions={missions}
