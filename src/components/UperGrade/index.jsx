@@ -113,7 +113,7 @@ export default function UperGrade({
 
   // Boost funksiyalari
   const handleBoostX2 = () => {
-    const cost = 400 * (boostX2Count + 1);
+    const cost = 2000 * (boostX2Count + 1);
     if (coins >= cost && !boostActive) {
       setCoins((prev) => prev - cost);
       setBoostX2Count((prev) => prev + 1);
@@ -127,7 +127,7 @@ export default function UperGrade({
   };
 
   const handleMultitap = () => {
-    const cost = 400 * (multitapCount + 1);
+    const cost = 2000 * (multitapCount + 1);
     if (coins >= cost) {
       setCoins((prev) => prev - cost);
       setUpgradeLevel((prev) => prev + 1);
@@ -136,7 +136,7 @@ export default function UperGrade({
   };
 
   const handleEnergyLimit = () => {
-    const cost = 200 * (energyLimitCount + 1);
+    const cost = 2000 * (energyLimitCount + 1);
     if (coins >= cost) {
       setCoins((prev) => prev - cost);
       setMaxEnergy((prev) => prev + 500);
@@ -169,26 +169,26 @@ export default function UperGrade({
     },
     {
       name: "Multitap",
-      cost: 5000 * (multitapCount + 1),
+      cost: 2000 * (multitapCount + 1),
       icon: "🖐️",
       onClick: handleMultitap,
-      disabled: coins < 5000 * (multitapCount + 1),
+      disabled: coins < 2000 * (multitapCount + 1),
       level: multitapCount,
     },
     {
       name: "Energy Limit",
-      cost: 6000 * (energyLimitCount + 1),
+      cost: 2000 * (energyLimitCount + 1),
       icon: "🔋",
       onClick: handleEnergyLimit,
-      disabled: coins < 6000 * (energyLimitCount + 1),
+      disabled: coins < 2000 * (energyLimitCount + 1),
       level: energyLimitCount,
     },
     {
       name: "Recharging Speed",
-      cost: 5000 * (rechargeCount + 1),
+      cost: 2000 * (rechargeCount + 1),
       icon: "⚡",
       onClick: handleRechargeSpeed,
-      disabled: coins < 5000 * (rechargeCount + 1),
+      disabled: coins < 2000 * (rechargeCount + 1),
       level: rechargeCount,
     },
   ];
